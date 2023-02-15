@@ -1,8 +1,8 @@
 import React from 'react';
 // ADD IMPORTS BACK FOR GRAPHS SECTION
-// import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
-// import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
-// import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
+import GrantRatesByOfficeImg from '../../../styles/Images/bar-graph-no-text.png';
+import GrantRatesByNationalityImg from '../../../styles/Images/pie-chart-no-text.png';
+import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png';
 import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
@@ -32,15 +32,54 @@ function RenderLandingPage(props) {
       </div>
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
-      {/* <div className="graphs-section"> */}
+      <div className="graphs-section">
+        <div className="grant-rates-by-office-graph-container">
+          <img
+            src={GrantRatesByOfficeImg}
+            alt="Bar Graph Showing Grant Rates By Office"
+            className="gr-office-img"
+          />
+          <p>Search Grant Rates By Office</p>
+        </div>
+        <div className="grant-rates-by-nationality-container">
+          <img
+            src={GrantRatesByNationalityImg}
+            alt="Pie Chart Showing Grant Rates By Nationality"
+            className="gr-nationality-img"
+          />
+          <p>Search Grant Rates By Nationality</p>
+        </div>
+        <div className="grant-rates-over-time-container">
+          <img
+            src={GrantRatesOverTimeImg}
+            alt="Line Graph Showing Grant Rates Over Time"
+            className="gr-overtime-img"
+          />
+          <p>Search Grant Rates Over Time</p>
+        </div>
+      </div>
       <div className="view-more-data-btn-container">
         <Button
           type="default"
-          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          style={{
+            backgroundColor: '#404C4A',
+            color: '#FFFFFF',
+            marginRight: '20%',
+          }}
           onClick={() => history.push('/graphs')}
         >
           View the Data
         </Button>
+        <a href="https://humanrightsfirst.org/wp-content/uploads/2022/10/COW2021001887-I589Data.csv">
+          <div className="read-more-btn">
+            <Button
+              type="default"
+              style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            >
+              <span>Download the Data</span>
+            </Button>
+          </div>
+        </a>
       </div>
 
       <div className="middle-section">
