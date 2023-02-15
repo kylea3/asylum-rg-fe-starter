@@ -100,10 +100,45 @@ function RenderLandingPage(props) {
       </div>
       <div>
         {/* Bottom Section: Add code here for the graphs section for your first ticket */}
-        {/* <div className="bottom-section">*/}
-        <p onClick={() => scrollToTop()} className="back-to-top">
-          Back To Top ^
-        </p>
+        <div className="bottom-section">
+          <h1>Systemic Disparity Insights</h1>
+          <div className="data-container">
+            <div className="data-points">
+              <h2>36%</h2>
+              <h3>
+                By the end of the Trump administration, the average asylum
+                office grant rate had fallen 36 percent from an average of 44
+                percent in fiscal year 2016 to 28 percent in fiscal year 2020.
+              </h3>
+            </div>
+            <div className="data-points">
+              <h2>5%</h2>
+              <h3>
+                The New York asylum office grant rate dropped to 5 percent in
+                fiscal year 2020.
+              </h3>
+            </div>
+            <div className="data-points">
+              <h2>6x Lower</h2>
+              <h3>
+                Between fiscal year 2017 and 2020, the New York asylum office’s
+                average grant rate was six times lower than the San Francisco
+                asylum office.
+              </h3>
+            </div>
+          </div>
+          <a href="https://humanrightsfirst.org/library/uscis-records-reveal-systemic-disparities-in-asylum-decisions/">
+            <Button
+              type="default"
+              style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+            >
+              <span>Read More</span>
+            </Button>
+          </a>
+          <p onClick={() => scrollToTop()} className="back-to-top">
+            Back To Top ^
+          </p>
+        </div>
       </div>
     </div>
   );
