@@ -66,13 +66,13 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
         for (let yearResults of data[0].yearResults) {
           rowItem = {
             'Fiscal Year': yearResults.fiscal_year,
-            'Total Cases': yearResults.totalCases,
-            Grants: Number(yearResults.totalGranted),
-            'Referrals / Denials': Number(yearResults.denied).toFixed(2),
-            'Admin Closed / Dismissal': Number(yearResults.adminClosed),
-            'Granted Rate': Number(
-              yearResults.totalGranted / yearResults.totalCases
-            ).toFixed(2),
+            'Total Cases': Number(yearResults.totalCases).toLocaleString(),
+            Grants: Number(yearResults.totalGranted).toLocaleString(),
+            'Referrals / Denials': Number(yearResults.denied).toLocaleString(),
+            'Admin Closed / Dismissal': Number(
+              yearResults.adminClosed
+            ).toLocaleString(),
+            'Granted Rate': Number(yearResults.granted).toFixed(2),
           };
           rowsForAllDisplay.push(rowItem);
         }
@@ -205,12 +205,13 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
             )[0];
             rowItem = {
               'Fiscal Year': data[0].yearResults[i].fiscal_year,
-              'Total Cases': officeObj.totalCases,
-              '% Granted': Number(officeObj.granted).toFixed(2),
-              '% Admin Close / Dismissal': Number(
+              'Total Cases': Number(officeObj.totalCases).toLocaleString(),
+              Grants: Number(officeObj.totalGranted).toLocaleString(),
+              'Referrals / Denials': Number(officeObj.denied).toLocaleString(),
+              'Admin Closed / Dismissal': Number(
                 officeObj.adminClosed
-              ).toFixed(2),
-              '% Denied': Number(officeObj.denied).toFixed(2),
+              ).toLocaleString(),
+              'Granted Rate': Number(officeObj.granted).toFixed(2),
             };
             rowsForTable.push(rowItem);
           }
@@ -226,12 +227,13 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
         for (let item of data[0].citizenshipResults) {
           rowItem = {
             Citizenship: item.citizenship,
-            'Total Cases': item.totalCases,
-            '% Granted': Number(item.granted / item.totalCases).toFixed(2),
-            '% Admin Close / Dismissal': Number(
-              item.adminClosed / item.totalCases
-            ).toFixed(2),
-            '% Denied': Number(item.denied / item.totalCases).toFixed(2),
+            'Total Cases': item.totalCases.toLocaleString(),
+            Grants: Number(item.totalGranted).toLocaleString(),
+            'Referrals / Denials': Number(item.denied).toLocaleString(),
+            'Admin Closed / Dismissals': Number(
+              item.adminClosed
+            ).toLocaleString(),
+            'Granted Rate': Number(item.granted).toFixed(2),
           };
           rowsForTable.push(rowItem);
         }
