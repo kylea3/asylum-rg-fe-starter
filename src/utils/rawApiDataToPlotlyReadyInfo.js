@@ -67,11 +67,12 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           rowItem = {
             'Fiscal Year': yearResults.fiscal_year,
             'Total Cases': yearResults.totalCases,
-            '% Granted': Number(yearResults.granted).toFixed(2),
-            '% Admin Close / Dismissal': Number(
-              yearResults.adminClosed
+            Grants: Number(yearResults.totalGranted),
+            'Referrals / Denials': Number(yearResults.denied).toFixed(2),
+            'Admin Closed / Dismissal': Number(yearResults.adminClosed),
+            'Granted Rate': Number(
+              yearResults.totalGranted / yearResults.totalCases
             ).toFixed(2),
-            '% Denied': Number(yearResults.denied).toFixed(2),
           };
           rowsForAllDisplay.push(rowItem);
         }
@@ -159,9 +160,10 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           rowItem = {
             Citizenship: item.citizenship,
             'Total Cases': item.totalCases,
-            '% Granted': Number(item.granted).toFixed(2),
-            '% Admin Close / Dismissal': Number(item.adminClosed).toFixed(2),
-            '% Denied': Number(item.denied).toFixed(2),
+            Grants: Number(item.totalGranted),
+            'Referrals / Denials': Number(item.denied),
+            'Admin Closed / Dismissals': Number(item.adminClosed),
+            'Granted Rate': Number(item.granted).toFixed(2),
           };
           rowsForTable.push(rowItem);
         }
@@ -220,9 +222,11 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
           rowItem = {
             Citizenship: item.citizenship,
             'Total Cases': item.totalCases,
-            '% Granted': Number(item.granted).toFixed(2),
-            '% Admin Close / Dismissal': Number(item.adminClosed).toFixed(2),
-            '% Denied': Number(item.denied).toFixed(2),
+            '% Granted': Number(item.granted / item.totalCases).toFixed(2),
+            '% Admin Close / Dismissal': Number(
+              item.adminClosed / item.totalCases
+            ).toFixed(2),
+            '% Denied': Number(item.denied / item.totalCases).toFixed(2),
           };
           rowsForTable.push(rowItem);
         }

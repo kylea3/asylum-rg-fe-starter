@@ -8,9 +8,9 @@ import OfficeHeatMap from './Graphs/OfficeHeatMap';
 import TimeSeriesSingleOffice from './Graphs/TimeSeriesSingleOffice';
 import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
-// import axios from 'axios';
+import axios from 'axios';
 import { resetVisualizationQuery } from '../../../state/actionCreators';
-import test_data from '../../../data/test_data.json';
+// import test_data from '../../../data/test_data.json';
 import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
 
@@ -72,41 +72,87 @@ function GraphWrapper(props) {
                                    -- Mack 
     
     */
+    let endpoints = [
+      'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary',
+      'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary',
+    ];
 
     if (office === 'all' || !office) {
-      stateSettingCallback(view, office, test_data);
-      //   axios
-      //     .get(process.env.REACT_APP_API_URI, {
-      //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
-      //       params: {
-      //         from: years[0],
-      //         to: years[1],
-      //       },
-      //     })
-      //     .then(result => {
-      //       stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
-      //     })
-      //     .catch(err => {
-      //       console.error(err);
-      //     });
-    } else {
-      stateSettingCallback(view, office, test_data);
+      axios
+        .all(
+          endpoints.map(endpoint =>
+            axios.get(endpoint, {
+              params: {
+                from: years[0],
+                to: years[1],
+                office: office,
+              },
+            })
+          )
+        )
+        .then(
+          axios.spread(({ data: fiscal }, { data: citizen }) => {
+            fiscal['citizenshipResults'] = citizen;
+            stateSettingCallback(view, office, [fiscal]);
+          })
+        )
+        .catch(err => {
+          console.error(err);
+        });
       // axios
-      //   .get(process.env.REACT_APP_API_URI, {
+      //   .get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary', {
       //     // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
       //     params: {
       //       from: years[0],
       //       to: years[1],
-      //       office: office,
       //     },
       //   })
       //   .then(result => {
-      //     stateSettingCallback(view, office, test_data); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+      //     console.log([result.data]);
+      //     stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
       //   })
       //   .catch(err => {
       //     console.error(err);
       //   });
+    } else {
+      axios
+        .all(
+          endpoints.map(endpoint =>
+            axios.get(endpoint, {
+              params: {
+                from: years[0],
+                to: years[1],
+                office: office,
+              },
+            })
+          )
+        )
+        .then(
+          axios.spread(({ data: fiscal }, { data: citizen }) => {
+            fiscal['citizenshipResults'] = citizen;
+            stateSettingCallback(view, office, [fiscal]);
+          })
+        )
+        .catch(err => {
+          console.error(err);
+        });
     }
+    //   axios
+    //     .get('https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary', {
+    //       // mock URL, can be simply replaced by `${Real_Production_URL}/summary` in prod!
+    //       params: {
+    //         from: years[0],
+    //         to: years[1],
+    //         office: office,
+    //       },
+    //     })
+    //     .then(result => {
+    //       stateSettingCallback(view, office, [result.data]); // <-- `test_data` here can be simply replaced by `result.data` in prod!
+    //     })
+    //     .catch(err => {
+    //       console.error(err);
+    //     });
+    // }
   }
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
