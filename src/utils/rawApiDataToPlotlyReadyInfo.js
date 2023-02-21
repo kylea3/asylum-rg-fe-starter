@@ -112,20 +112,25 @@ const rawApiDataToPlotlyReadyInfo = (view, office, data) => {
                 'Total Cases': yearResults.yearData.filter(
                   yearItem => yearItem.office === officeKey
                 )[0].totalCases,
-                '% Granted': Number(
+                Grants: Number(
                   yearResults.yearData.filter(
                     yearItem => yearItem.office === officeKey
-                  )[0].granted
-                ).toFixed(2),
-                '% Admin Close / Dismissal': Number(
-                  yearResults.yearData.filter(
-                    yearItem => yearItem.office === officeKey
-                  )[0].adminClosed
-                ).toFixed(2),
-                '% Denied': Number(
+                  )[0].totalGranted
+                ),
+                'Referrals / Denials': Number(
                   yearResults.yearData.filter(
                     yearItem => yearItem.office === officeKey
                   )[0].denied
+                ),
+                'Admin Closed / Dismissals': Number(
+                  yearResults.yearData.filter(
+                    yearItem => yearItem.office === officeKey
+                  )[0].adminClosed
+                ),
+                'Granted Rate': Number(
+                  yearResults.yearData.filter(
+                    yearItem => yearItem.office === officeKey
+                  )[0].granted
                 ).toFixed(2),
               };
               rowsForTable.push(rowItem);
