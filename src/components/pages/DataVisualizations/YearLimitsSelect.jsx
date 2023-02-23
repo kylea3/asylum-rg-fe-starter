@@ -6,7 +6,6 @@ import {
 } from '../../../state/actionCreators';
 // import YearLimitsSlider from './YearLimitsSlider';
 import { rawApiDataToPlotlyReadyInfo, useInterval } from '../../../utils';
-
 import { connect } from 'react-redux';
 import { colors } from '../../../styles/data_vis_colors';
 
@@ -18,18 +17,22 @@ const mapStateToProps = (state, ownProps) => {
     switch (view) {
       case 'time-series':
         return {
+          allData: state.vizReducer.allData,
           years: state.vizReducer.timeSeriesAllYears,
         };
       case 'office-heat-map':
         return {
+          allData: state.vizReducer.allData,
           years: state.vizReducer.officeHeatMapYears,
         };
       case 'citizenship':
         return {
+          allData: state.vizReducer.allData,
           years: state.vizReducer.citizenshipMapAllYears,
         };
       default:
         return {
+          allData: state.vizReducer.allData,
           years: ['', ''],
         };
     }
@@ -37,14 +40,17 @@ const mapStateToProps = (state, ownProps) => {
     switch (view) {
       case 'time-series':
         return {
+          allData: state.vizReducer.allData,
           years: state.vizReducer.offices[office].timeSeriesYears,
         };
       case 'citizenship':
         return {
+          allData: state.vizReducer.allData,
           years: state.vizReducer.offices[office].citizenshipMapYears,
         };
       default:
         return {
+          allData: state.vizReducer.allData,
           years: ['', ''],
         };
     }
@@ -52,8 +58,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 function YearLimitsSelect(props) {
-  let { view, office, dispatch, clearQuery, updateStateWithNewData, years } =
-    props;
+  let { view, office, dispatch, clearQuery, years, allData } = props;
   // const yearInputsOnChange = (view, office, e) => {
   //   dispatch(
   //     setHeatMapYears(
@@ -76,8 +81,11 @@ function YearLimitsSelect(props) {
   }, 10);
 
   useEffect(() => {
-    updateStateWithNewData(years, view, office, stateSettingFn);
-  });
+    if (Object.keys(allData).length !== 0) {
+      stateSettingFn(view, office, allData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allData]);
 
   return (
     <div
@@ -100,7 +108,7 @@ function YearLimitsSelect(props) {
         name="yearLimitsSelect"
         initialValues={{ year_start: years[0], year_end: years[1] }}
         onFinish={() => {
-          updateStateWithNewData(years, view, office, stateSettingFn);
+          stateSettingFn(view, office, allData);
         }}
         autoComplete="off"
         layout="inline"
